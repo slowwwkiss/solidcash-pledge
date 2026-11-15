@@ -1,0 +1,1 @@
+var e=[];function t(t){e.push(t)}function n(){for(let t of e)t()}export{n,t};

@@ -1,0 +1,1 @@
+import{t as e}from"./TransactionBuilder-3HQBYTFP.js";var t=class extends e{checkMaxFee(e){}};export{t};

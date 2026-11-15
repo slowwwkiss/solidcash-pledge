@@ -1,0 +1,1 @@
+import{i as e,t}from"./hex-sWBIo_Q5.js";import{I as n,K as r}from"./reader-DyIx0DxB.js";function i(i,a){let o=e(i),s=a.toLowerCase();if(o.length*2!==s.length)return!1;let c=r(o);if(c.length===0)return i.toLowerCase()===s;let l=c[0]+1,u=e(s.slice(l*2,(l+32)*2));return t(n(o,u.reverse(),c))===s}export{i as t};

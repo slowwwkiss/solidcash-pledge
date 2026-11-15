@@ -1,0 +1,1 @@
+export{t as attachWait}from"./wait-BbQ1TDVu.js";

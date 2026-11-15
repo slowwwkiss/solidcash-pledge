@@ -1,0 +1,1 @@
+var e=(e,t,n=!1)=>{let r=`${e}${t===void 0?``:` ${t}`}`;if(n)throw Error(r);return r},t=(t,n=`Received an unknown value; this should have been caught by TypeScript - are your types correct?`)=>e(n,String(t),!0),n=(e,t=`Expected a successful result, but encountered an error: `)=>{if(typeof e==`string`)throw Error(`${t}${e}`);return e};export{e as n,t as r,n as t};

@@ -1,0 +1,1 @@
+export{t as OpcodesBchSpec}from"./bch-spec-opcodes-MYndsQLs.js";

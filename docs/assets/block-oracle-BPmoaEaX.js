@@ -1,0 +1,1 @@
+export{o as framedOraclePool}from"./block-oracle-RJAF8o44.js";

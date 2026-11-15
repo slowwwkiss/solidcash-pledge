@@ -1,0 +1,1 @@
+var e=new TextEncoder,t=t=>e.encode(t),n=new TextDecoder,r=e=>n.decode(e),i=e=>e.normalize(`NFKC`);export{i as n,t as r,r as t};
