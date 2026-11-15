@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolidPledge — Assurance pledges on Bitcoin Cash</title>
+  <meta name="description" content="SolidPledge: Flipstarter-style assurance pledges on Bitcoin Cash. Built on SolidCash + Cashonize Smart Wallet for BCH Blaze 2026, Best SolidCash Application." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230AC18E'/%3E%3Ctext x='16' y='23' font-size='18' font-family='Arial' font-weight='bold' text-anchor='middle' fill='white'%3EP%3C/text%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-C9HuyNi-.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-XKyaHtl9.js">
+  <link rel="modulepreload" crossorigin href="./assets/error-ChTK8w8Y.js">
+  <link rel="modulepreload" crossorigin href="./assets/locking-bytecode-DjXTnbQc.js">
+  <link rel="modulepreload" crossorigin href="./assets/hex-sWBIo_Q5.js">
+  <link rel="modulepreload" crossorigin href="./assets/combinations-DwIq_wVc.js">
+  <link rel="modulepreload" crossorigin href="./assets/transaction-encoding-CDrD1mqg.js">
+  <link rel="modulepreload" crossorigin href="./assets/instruction-sets-utils-B471Gj8Y.js">
+  <link rel="modulepreload" crossorigin href="./assets/script-CEZghzb_.js">
+  <link rel="modulepreload" crossorigin href="./assets/dist-COO1rU0Y.js">
+  <link rel="modulepreload" crossorigin href="./assets/utf8-BJ-5TjmJ.js">
+  <link rel="modulepreload" crossorigin href="./assets/signing-serialization-B5iNrpZT.js">
+  <link rel="modulepreload" crossorigin href="./assets/utils-Dqu-xpq4.js">
+  <link rel="modulepreload" crossorigin href="./assets/locking-bytecode-iIaamhLD.js">
+  <link rel="modulepreload" crossorigin href="./assets/sha3-BR9wjYkT.js">
+  <link rel="modulepreload" crossorigin href="./assets/state-skTgbeQs.js">
+  <link rel="modulepreload" crossorigin href="./assets/Argument-uHE8jElO.js">
+  <link rel="modulepreload" crossorigin href="./assets/push-C181MRXu.js">
+  <link rel="modulepreload" crossorigin href="./assets/bch-spec-opcodes-MYndsQLs.js">
+  <link rel="modulepreload" crossorigin href="./assets/bch-2026-consensus-D7vcEuzv.js">
+  <link rel="modulepreload" crossorigin href="./assets/bch-2026-instruction-set-E-knV9ui.js">
+  <link rel="modulepreload" crossorigin href="./assets/createVirtualMachine-B9AA2xxg.js">
+  <link rel="modulepreload" crossorigin href="./assets/reader-DyIx0DxB.js">
+  <link rel="modulepreload" crossorigin href="./assets/external-signing-BJmMJv4g.js">
+  <link rel="modulepreload" crossorigin href="./assets/preload-helper-DclECHGd.js">
+  <link rel="modulepreload" crossorigin href="./assets/mock-reset-AHprHV_s.js">
+  <link rel="modulepreload" crossorigin href="./assets/wait-BbQ1TDVu.js">
+  <link rel="modulepreload" crossorigin href="./assets/TransactionBuilder-3HQBYTFP.js">
+  <link rel="modulepreload" crossorigin href="./assets/Contract-ClE-kkEr.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-BJcLISHa.css">
+</head>
+<body>
+  <div id="app">
+    <header class="banner">
+      <div class="banner-inner">
+        <span class="banner-badge">BCH BLAZE 2026 &middot; Best SolidCash Application</span>
+        <nav class="banner-links">
+          <a class="banner-link" href="https://github.com/solidcash/solidcash" target="_blank" rel="noopener">SolidCash</a>
+          <a class="banner-link" href="https://cashonize.com" target="_blank" rel="noopener">Cashonize</a>
+          <a class="banner-link" href="./contracts/SolidPledge.scash" target="_blank" rel="noopener">Contract source</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>SolidPledge</h1>
+        <p class="tagline">Assurance pledges on Bitcoin Cash. Fund it together — or nobody pays at all.</p>
+        <ol class="steps">
+          <li><b>1.</b> Create a campaign — target + deadline, get a contract address &amp; share link.</li>
+          <li><b>2.</b> Supporters pledge BCH. The money locks in the contract, not in anyone's wallet.</li>
+          <li><b>3.</b> Target reached? Anyone can trigger the payout to the creator. Not reached by the deadline? Every pledger refunds themself.</li>
+        </ol>
+        <p class="hint"><b>Chipnet only.</b> This demo runs on the Bitcoin Cash testnet (chipnet) with free faucet coins — no real BCH moves anywhere.</p>
+      </section>
+
+      <section class="card" id="wallet-card">
+        <div class="row between">
+          <h2>Wallet</h2>
+          <span class="pill" id="wallet-status">No wallet</span>
+        </div>
+        <p class="muted">Powered by the <b>Cashonize Smart Wallet</b> engine (<code>@cashonize/bch-wallet-lib</code>) — the same code the Cashonize app runs. The demo wallet lives in your browser; its backup phrase also imports into the Cashonize app.</p>
+        <div id="wallet-empty">
+          <button id="btn-create-wallet" class="btn primary" type="button">Create demo wallet</button>
+          <button id="btn-import-wallet" class="btn" type="button">Import backup phrase</button>
+        </div>
+        <div id="wallet-ready" hidden>
+          <p class="addr-line">Address <code id="wallet-addr">—</code> <button id="btn-copy-addr" class="mini-btn" type="button">Copy</button></p>
+          <p class="addr-line">Balance <b id="wallet-balance">—</b> <button id="btn-refresh-balance" class="mini-btn" type="button">Refresh</button></p>
+          <div class="row">
+            <button id="btn-faucet" class="btn" type="button">Get free testnet BCH (faucet)</button>
+            <button id="btn-show-mnemonic" class="btn" type="button">Show backup phrase</button>
+            <button id="btn-disconnect" class="btn danger" type="button">Disconnect</button>
+          </div>
+          <p class="mnemonic" id="mnemonic-box" hidden></p>
+        </div>
+        <p class="note" id="wallet-note"></p>
+      </section>
+
+      <section class="card" id="create-card">
+        <h2>Create a campaign</h2>
+        <form id="create-form">
+          <label>Title
+            <input id="in-title" type="text" maxlength="80" placeholder="e.g. Fund the community meetup" required />
+          </label>
+          <label>Target (satoshis)
+            <input id="in-target" type="number" min="1000" step="1" value="5000" required />
+          </label>
+          <label>Deadline
+            <input id="in-deadline" type="datetime-local" required />
+          </label>
+          <button class="btn primary" type="submit">Create campaign</button>
+        </form>
+        <p class="muted">Creating a campaign is free — the contract address is derived from your address, the target and the deadline. No on-chain transaction is needed until the first pledge.</p>
+        <div id="create-result" hidden>
+          <p class="addr-line">Contract <code id="new-contract-addr">—</code> <button id="btn-copy-contract" class="mini-btn" type="button">Copy</button></p>
+          <p class="addr-line">Share link <input id="out-link" readonly /></p>
+          <img id="qr-img" alt="Campaign QR code" />
+          <p><a id="link-open-campaign" href="#">Open campaign</a></p>
+        </div>
+      </section>
+
+      <section class="card" id="campaign-card" hidden>
+        <div class="row between">
+          <h2 id="campaign-title">Campaign</h2>
+          <span class="pill" id="campaign-status">—</span>
+        </div>
+        <p class="addr-line">Contract <code id="campaign-addr">—</code> <button id="btn-copy-campaign" class="mini-btn" type="button">Copy</button></p>
+        <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+        <p><b id="raised-label">0</b> / <span id="target-label">0</span> satoshis raised &middot; <span id="deadline-label">—</span></p>
+        <h3>Pledges</h3>
+        <ul id="pledge-list" class="pledges"><li class="muted">No pledges yet.</li></ul>
+        <div class="row">
+          <label class="inline-label">Pledge amount (sat)
+            <input id="in-pledge-amount" type="number" min="546" step="1" value="3500" />
+          </label>
+          <button id="btn-pledge" class="btn primary" type="button">Pledge</button>
+          <button id="btn-payout" class="btn" type="button" disabled>Release payout to creator</button>
+          <button id="btn-refund" class="btn" type="button" disabled>Refund my pledges</button>
+          <button id="btn-refresh-campaign" class="btn" type="button">Refresh</button>
+        </div>
+        <p class="note" id="campaign-note"></p>
+      </section>
+
+      <section class="card" id="receipt-card" hidden>
+        <h2>Last transaction</h2>
+        <p class="addr-line">txid <code id="receipt-txid">—</code></p>
+        <p><a id="receipt-link" href="#" target="_blank" rel="noopener">View on explorer</a></p>
+      </section>
+
+      <section class="card">
+        <h2>How the contract works</h2>
+        <p><code>SolidPledge</code> is written in SolidCash (<code>.scash</code>, compiled with <code>solidc</code>) and tested with <code>@solidcash/testing</code> (11 mock-network tests). It is an assurance contract with two exits, enforced by covenant introspection:</p>
+        <ul>
+          <li><b>payout()</b> — anyone can release the funds to the creator, but only as a single output paying the creator at least the target. An unfunded campaign can never pay out.</li>
+          <li><b>refund(pubkey, sig)</b> — after the deadline, each pledger reclaims their own UTXO to their own address. Before the deadline, no refund is possible, so a funded campaign cannot be drained early.</li>
+        </ul>
+        <p class="muted">Both paths were proven with real chipnet transactions (see README): payout tx <code>e2b182d3…</code> paid the creator 6,000 sat; refund tx <code>ea92cd20…</code> returned 2,500 sat to the pledger. Pledges are plain P2SH payments — the campaign exists as soon as its address is computed.</p>
+        <p class="muted">Honest limits: in this sandbox the app reads the chain over HTTPS (mainnet-js REST) and signs locally with libauth, because Electrum WebSockets are blocked here. On a normal network the same Cashonize wallet can sync over Electrum directly. Chipnet blocks are ~10 minutes apart, so confirmations are slow — the app shows unconfirmed pledges immediately.</p>
+      </section>
+
+      <p class="status-line" id="status-line"></p>
+    </main>
+  </div>
+</body>
+</html>
