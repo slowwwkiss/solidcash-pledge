@@ -1,0 +1,66 @@
+pragma solidcash >=0.8.0;
+
+// SolidPledge — assurance (Flipstarter-style) pledge contract for Bitcoin Cash.
+//
+// A campaign is a set of constructor parameters: the creator's pubkey hash,
+// the funding target (satoshis) and the deadline (Unix timestamp, used as the
+// transaction locktime). Every campaign has its own P2SH address, derived
+// from these parameters — no on-chain deployment transaction is needed to
+// "create" a campaign; pledges are plain P2SH payments to that address.
+//
+// Two ways out, enforced by covenant (introspection), so no one — not even
+// the creator — can move the money anywhere else:
+//
+//   payout(): anyone may release the funds to the creator, but ONLY as a
+//     single output, and ONLY if that output pays the creator at least the
+//     target amount. If the pledges never reach the target, no payout
+//     transaction can satisfy the covenant. (Like Flipstarter, the payout
+//     stays possible after the deadline: once a campaign is funded, the
+//     money is the creator's whenever it is claimed. The deadline is what
+//     opens the refund path — see below.)
+//   refund(pubkey, sig): after the deadline, each pledger may reclaim their
+//     own UTXO back to their own P2PKH address. The signature proves they
+//     own the pledge; the covenant proves the money goes back to them.
+//     Before the deadline no refund is possible, so a funded campaign
+//     cannot be drained by early refunds.
+//
+// Design notes:
+// - The deadline is a Unix timestamp because nLockTime >= 500,000,000 is
+//   interpreted as a timestamp. `tx.locktime` is the transaction's
+//   nLockTime: a refund sets locktime = deadline (spendable only once the
+//   deadline has passed); a payout uses locktime 0.
+// - `tx.outputs.length == 1` in both functions closes the "extra output"
+//   leak: overfunding goes to the creator on payout, and a refund returns
+//   the whole UTXO (minus fee) to the pledger.
+// - A pledge UTXO is spent exactly once: either it is part of the payout,
+//   or its owner refunds it. There is no partial-claim path.
+contract SolidPledge(
+    bytes20 creator,
+    int target,
+    int deadline
+) {
+    function payout() {
+        // Payout is gated by AMOUNT, not by time: a locktime-0 payout tx is
+        // always "before the deadline", so no locktime check can bound the
+        // payout to pre-deadline mining (Bitcoin has no max-time lock).
+        // What the covenant does enforce: one output, to the creator, of
+        // at least the target. Unfunded campaigns can never pay out.
+        require(tx.outputs.length == 1);
+        require(tx.outputs[0].lockingBytecode == new LockingBytecodeP2PKH(creator));
+
+        // ...and only if the campaign reached its target.
+        require(tx.outputs[0].value >= target);
+    }
+
+    function refund(pubkey pk, sig s) {
+        // Refunds are only possible once the deadline has passed.
+        require(tx.locktime >= deadline);
+
+        // Only the pledger themself can refund their own UTXO.
+        require(checkSig(s, pk));
+
+        // The whole UTXO (minus fee) goes back to the pledger, nothing else.
+        require(tx.outputs.length == 1);
+        require(tx.outputs[0].lockingBytecode == new LockingBytecodeP2PKH(hash160(pk)));
+    }
+}

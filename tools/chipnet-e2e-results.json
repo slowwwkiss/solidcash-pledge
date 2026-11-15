@@ -1,0 +1,30 @@
+{
+  "wallets": {
+    "creator": "bchtest:qz4lcwxknajcvd4dl08fuhajejxk6nwgng0ue0aqeg",
+    "pledger1": "bchtest:qpwwczk5qxcypmrcr2pltkew75x8feux2544qjkv59",
+    "pledger2": "bchtest:qzmk4wvdycmrymfpnctstf89jkxeydq8lylprm2e00"
+  },
+  "campaigns": {
+    "payout": {
+      "contract": "bchtest:pv5rzjzqfq9sp94mdlmkf72f6enevv4ptqqx6kwzmddacmd69vamu9arntyll",
+      "target": "5000",
+      "deadline": 1794747250,
+      "pledges": [
+        "31d8efe5970af6fbd43093940f6062d8497ba5438b01a09b30fd1df25452b63a",
+        "34c3998226b57070d96ec4d5db9c7e9d7155ad0ffcc0a1fc50a618f3697df4f7"
+      ],
+      "payoutTxid": "e2b182d309a54fa10654bf13873672c35eb9e9d3f55f1b7e38da223510c611ed",
+      "creatorBalance": "12000"
+    },
+    "refund": {
+      "contract": "bchtest:pvn3djmclj8rnxqm8jlq9stnjtxgzy43ckj9wej73lpwfuhyhn8x72rnmnydd",
+      "target": "50000",
+      "deadline": 1794740058,
+      "pledges": [
+        "ece632fb1325057a16cc17c7f8be557b82c471f403ffe0242730d145dc02680d"
+      ],
+      "refundTxid": "ea92cd20f2da90edbe8dbb83a671a9a2a43f45f93e18f4b46b49c327a3d1628b",
+      "pledger2Balance": "3500"
+    }
+  }
+}

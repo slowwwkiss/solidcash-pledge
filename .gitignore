@@ -1,0 +1,10 @@
+# Dependencies + build output
+node_modules/
+package-lock.json
+
+# Test wallets (contain mnemonics — NEVER commit)
+tools/.chipnet-wallets.json
+
+# Local logs / temp files
+*.log
+.DS_Store
